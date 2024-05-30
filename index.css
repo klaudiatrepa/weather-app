@@ -4,15 +4,27 @@
     margin: 0%;
 }
 
-html {
-    font-family: "Open Sans", sans-serif;
+.poppins-regular {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.poppins-light {
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+}
+
+body {
+    background-color: #1E1E1E;
 }
 
 .main-wrapper {
     display: flex;
     flex-direction: column;
     margin: 0 auto;
-    width: 95%;
+    width: 90%;
     height: 100vh;
 }
 
@@ -21,17 +33,21 @@ html {
     flex-direction: column;
 }
 
-.logo-icon {
-    align-self: flex-start;
-}
-
 .logo-text {
     align-self: center;
     font-size: 25px;
+    color: white
+}
+
+
+.logo-icon img {
+    width: 15%;
+    margin-bottom: -7%;
 }
 
 .data-hour {
     align-self: flex-end;
+    color: white;
 }
 
 .wrapper {
@@ -60,13 +76,15 @@ nav {
 .nav-items a {
     text-decoration: none;
     text-align: center;
-    padding: 10px 10px;
+    padding: 0 10px;
     font-size: 16px;
+    color: white;
+    align-self: flex-start;
 }
 
 .nav-items a:visited {
     text-decoration: none;
-    color: black;
+    color: white;
 }
 
 .location-div {
@@ -129,16 +147,25 @@ input {
     flex-direction: column;
 }
 
-
-
-@media (min-width: 768px) {
+@media (min-width: 600px) {
 
     nav {
         height: 100px;
     }
 
+    .logo-icon img {
+        margin-bottom: -4%;
+    }
+
     .logo-text {
         font-size: 45px;
+    }
+
+    .nav-items a {
+        padding: 0 10px;
+        font-size: 20px;
+        color: white;
+        align-self: flex-start;
     }
 
     .weather-info {
