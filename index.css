@@ -1,0 +1,154 @@
+* {
+    box-sizing: border-box;
+    padding: 0%;
+    margin: 0%;
+}
+
+html {
+    font-family: "Open Sans", sans-serif;
+}
+
+.main-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    width: 95%;
+    height: 100vh;
+}
+
+.logo-div {
+    display: flex;
+    flex-direction: column;
+}
+
+.logo-icon {
+    align-self: flex-start;
+}
+
+.logo-text {
+    align-self: center;
+    font-size: 25px;
+}
+
+.data-hour {
+    align-self: flex-end;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1200px;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    height: 80px;
+
+}
+
+.nav-items {
+    display: flex;
+    justify-content: space-evenly;
+    width: 90%;
+}
+
+.nav-items a {
+    text-decoration: none;
+    text-align: center;
+    padding: 10px 10px;
+    font-size: 16px;
+}
+
+.nav-items a:visited {
+    text-decoration: none;
+    color: black;
+}
+
+.location-div {
+    display: flex;
+    justify-content: center;
+}
+
+input {
+    height: 50px;
+    width: 200px;
+    font-size: 16px;
+}
+
+.weather-info {
+    background-color: red;
+    height: 270px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.location-name {
+    background-color: greenyellow;
+}
+
+.temp-info {
+    background-color: blueviolet;
+    text-align: center;
+}
+
+.date {
+    background-color: grey;
+}
+
+.weather-details {
+    background-color: goldenrod;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.humidity {
+    display: flex;
+    flex-direction: column;
+}
+
+.visability {
+    display: flex;
+    flex-direction: column;
+}
+
+.air-pressure {
+    display: flex;
+    flex-direction: column;
+}
+
+.wind {
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+@media (min-width: 768px) {
+
+    nav {
+        height: 100px;
+    }
+
+    .logo-text {
+        font-size: 45px;
+    }
+
+    .weather-info {
+        background-color: darkred;
+        height: 270px;
+        width: 520px;
+    }
+
+    .weather-div {
+        display: flex;
+        justify-content: center;
+    }
+}
