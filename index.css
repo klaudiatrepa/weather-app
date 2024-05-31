@@ -116,8 +116,6 @@ nav {
     bottom: 0;
     background: rgb(51, 224, 23);
     background: linear-gradient(90deg, rgba(51, 224, 23, 1) 0%, rgba(149, 241, 134, 0) 100%);
-    ;
-    -webkit-transition: .4s;
     transition: .4s;
 }
 
@@ -129,13 +127,10 @@ nav {
     left: 4px;
     top: 2px;
     background-color: #181515;
-    -webkit-transition: .4s;
     transition: .4s;
 }
 
 input:checked+.slider:before {
-    -webkit-transform: translateX(18px);
-    -ms-transform: translateX(18px);
     transform: translateX(18px);
 }
 
@@ -159,21 +154,45 @@ input:checked+.slider:before {
 .location-div {
     display: flex;
     justify-content: center;
+    margin-top: 5%;
+    gap: 10%;
 }
 
-input {
+.location-div input {
     height: 50px;
     width: 200px;
     font-size: 16px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    border: 1px solid #D9D9D9;
+    color: #D9D9D9;
+    width: 250px;
+    height: 30px;
+    padding-left: 10px;
+    background-color: #D9D9D9;
+}
+
+input[type=text]:focus {
+    outline: none;
+    border: 1px solid #D9D9D9;
+    color: #D9D9D9;
+}
+
+.btn-search {
+    border-radius: 20px;
+    background-color: #D9D9D9;
 }
 
 .weather-info {
-    background-color: red;
+    background: rgb(173, 54, 203);
+    background: linear-gradient(132deg, rgba(173, 54, 203, 1) 0%, rgba(51, 51, 51, 1) 100%);
     height: 270px;
     width: 100%;
     display: flex;
     justify-content: space-between;
     flex-direction: column;
+    margin-top: 5%;
 }
 
 .location-name {
@@ -261,6 +280,10 @@ input {
         -webkit-transform: translateX(30pc);
         -ms-transform: translateX(30px);
         transform: translateX(30px);
+    }
+
+    .location-div {
+        margin-top: 0;
     }
 
     .weather-info {
