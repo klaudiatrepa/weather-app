@@ -87,6 +87,75 @@ nav {
     color: white;
 }
 
+.temp-changer {
+    margin-top: 5%;
+}
+
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgb(51, 224, 23);
+    background: linear-gradient(90deg, rgba(51, 224, 23, 1) 0%, rgba(149, 241, 134, 0) 100%);
+    ;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    top: 2px;
+    background-color: #181515;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked+.slider:before {
+    -webkit-transform: translateX(18px);
+    -ms-transform: translateX(18px);
+    transform: translateX(18px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.c-temp {
+    color: white;
+}
+
+.f-temp {
+    color: white;
+}
+
 .location-div {
     display: flex;
     justify-content: center;
@@ -147,6 +216,13 @@ input {
     flex-direction: column;
 }
 
+@media (min-width: 890px) {
+    .temp-changer {
+        width: 283.28px;
+        text-align: right;
+    }
+}
+
 @media (min-width: 600px) {
 
     nav {
@@ -166,6 +242,25 @@ input {
         font-size: 20px;
         color: white;
         align-self: flex-start;
+    }
+
+    .c-temp {
+        font-size: 20px;
+    }
+
+    .f-temp {
+        font-size: 20px;
+    }
+
+    .switch {
+        width: 60px;
+        height: 20px;
+    }
+
+    input:checked+.slider:before {
+        -webkit-transform: translateX(30pc);
+        -ms-transform: translateX(30px);
+        transform: translateX(30px);
     }
 
     .weather-info {
