@@ -73,18 +73,19 @@ nav {
     width: 90%;
 }
 
-.nav-items a {
-    text-decoration: none;
+.nav-items button {
     text-align: center;
     padding: 0 10px;
     font-size: 16px;
+    background-color: #1E1E1E;
     color: white;
     align-self: flex-start;
+    border: none;
+    cursor: pointer;
 }
 
-.nav-items a:visited {
-    text-decoration: none;
-    color: white;
+.underline {
+    text-decoration: underline;
 }
 
 .temp-changer {
@@ -119,7 +120,7 @@ nav {
     transition: .4s;
 }
 
-.slider:before {
+.sliderBall {
     position: absolute;
     content: "";
     height: 16px;
@@ -128,19 +129,16 @@ nav {
     top: 2px;
     background-color: #181515;
     transition: .4s;
+    border-radius: 34px;
 }
 
-input:checked+.slider:before {
-    transform: translateX(18px);
+input:checked+.sliderBall {
+    transform: translateX(16px);
 }
 
 /* Rounded sliders */
 .slider.round {
     border-radius: 34px;
-}
-
-.slider.round:before {
-    border-radius: 50%;
 }
 
 .c-temp {
@@ -166,7 +164,7 @@ input:checked+.slider:before {
     -moz-border-radius: 20px;
     border-radius: 20px;
     border: 1px solid #D9D9D9;
-    color: #D9D9D9;
+    color: black;
     width: 250px;
     height: 30px;
     padding-left: 10px;
@@ -195,7 +193,7 @@ input[type=text]:focus {
     margin-top: 5%;
     color: white;
     border-radius: 5%;
-    min-width: 520px;
+    min-width: 350px;
 }
 
 /* .location-name {
@@ -253,6 +251,10 @@ input[type=text]:focus {
     flex-direction: column;
 }
 
+/* added classes */
+
+
+
 @media (min-width: 890px) {
     .temp-changer {
         width: 283.28px;
@@ -274,7 +276,7 @@ input[type=text]:focus {
         font-size: 45px;
     }
 
-    .nav-items a {
+    .nav-items button {
         padding: 0 10px;
         font-size: 20px;
         color: white;
@@ -298,9 +300,7 @@ input[type=text]:focus {
         height: 20px;
     }
 
-    input:checked+.slider:before {
-        -webkit-transform: translateX(30pc);
-        -ms-transform: translateX(30px);
+    input:checked+.sliderBall {
         transform: translateX(30px);
     }
 

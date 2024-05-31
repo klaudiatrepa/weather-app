@@ -28,8 +28,8 @@
             </div>
             <div class="wrapper">
                 <div class="nav-items">
-                    <a href="#" class="poppins-light">Today</a>
-                    <a href="#" class="poppins-light">Tommorow</a>
+                    <button class="underline today poppins-light">Today</button>
+                    <button class="tommorow poppins-light">Tommorow</button>
                 </div>
             </div>
         </nav>
@@ -38,13 +38,13 @@
                 <div class="temp-changer">
                     <span class="c-temp poppins-light">C°</span>
                     <label class="switch">
-                        <input type="checkbox">
-                        <span class="slider round"></span>
+                        <span class="slider round"><input class="checkbox" type="checkbox"><span
+                                class="sliderBall"></span></span>
                     </label>
                     <span class="f-temp poppins-light">F°</span>
                 </div>
                 <div class="location-div">
-                    <input class="poppins-light" type="text" placeholder="Search location...">
+                    <input class="location-input poppins-light" type="text" placeholder="Search location...">
                     <!-- <button class="btn-search">Search</button> -->
                 </div>
             </div>
@@ -84,5 +84,6 @@
         </footer>
     </div>
 </body>
+<script src="weather-app.js"></script>
 
 </html>
