@@ -5,10 +5,12 @@ let tempData;
 let todayBtn;
 let tommorowBtn;
 let currentHourDiv;
+let currentDateDiv;
 let humData;
 let visibilityData;
 let airPressureData;
 let windData;
+
 
 const API_LINK = "https://api.openweathermap.org/data/2.5/weather?q=";
 const API_KEY = "&appid=850bf7154a3a4b64ad55146334b9b956";
@@ -20,7 +22,8 @@ const main = () => {
     prepareDOMEvents();
     showCurrentTime();
     setInterval(showCurrentTime, 1000);
-    getWeather()
+    getWeather();
+    showCurrentDate()
 }
 
 const prepareDOMElements = () => {
@@ -31,11 +34,11 @@ const prepareDOMElements = () => {
     todayBtn = document.querySelector('.today');
     tommorowBtn = document.querySelector('.tommorow');
     currentHourDiv = document.querySelector(".data-hour");
+    currentDateDiv = document.querySelector('.data-date');
     humData = document.querySelector('.data-humidity');
     visibilityData = document.querySelector('.data-visibility');
     airPressureData = document.querySelector('.air-pressure-data');
-    windData = document.querySelector('.data-wind')
-
+    windData = document.querySelector('.data-wind');
 }
 
 const prepareDOMEvents = () => {
@@ -64,8 +67,6 @@ const getWeather = () => {
             visibilityData.textContent = visibility + ' m';
             airPressureData.textContent = airPressure + ' hPa';
             windData.textContent = wind + ' m/s'
-
-
         })
 }
 
@@ -112,6 +113,16 @@ const showCurrentTime = () => {
     const currentTime = `${currentHour}:${currentMinutes < 10 ? 0 : ""}${currentMinutes}`;
 
     currentHourDiv.innerHTML = currentTime;
+}
+
+const showCurrentDate = () => {
+    const currentDate = new Date();
+    const currentDay = currentDate.getDay();
+    const currentMonth = currentDate.getMonth();
+    const currentYear = currentDate.getFullYear();
+    const currentCalendarDate = `${currentDay < 10 ? 0 : ""}${currentDay}.${currentMonth < 10 ? 0 : ""}${currentMonth}.${currentYear}`;
+
+    currentDateDiv.innerHTML = currentCalendarDate;
 }
 
 document.addEventListener('DOMContentLoaded', main)
