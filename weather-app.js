@@ -5,13 +5,22 @@ let tempData;
 let todayBtn;
 let tommorowBtn;
 let currentHourDiv;
+let humData;
+let visibilityData;
+let airPressureData;
+let windData;
 
+const API_LINK = "https://api.openweathermap.org/data/2.5/weather?q=";
+const API_KEY = "&appid=850bf7154a3a4b64ad55146334b9b956";
+const API_UNIT_METRIC = "&units=metric";
+const API_UNIT_IMPERIAL = "&units=imperial";
 
 const main = () => {
     prepareDOMElements();
     prepareDOMEvents();
     showCurrentTime();
     setInterval(showCurrentTime, 1000);
+    getWeather()
 }
 
 const prepareDOMElements = () => {
@@ -22,6 +31,10 @@ const prepareDOMElements = () => {
     todayBtn = document.querySelector('.today');
     tommorowBtn = document.querySelector('.tommorow');
     currentHourDiv = document.querySelector(".data-hour");
+    humData = document.querySelector('.data-humidity');
+    visibilityData = document.querySelector('.data-visibility');
+    airPressureData = document.querySelector('.air-pressure-data');
+    windData = document.querySelector('.data-wind')
 
 }
 
@@ -32,6 +45,29 @@ const prepareDOMEvents = () => {
     tommorowBtn.addEventListener('click', underlineTommorow);
 }
 
+const getWeather = () => {
+    const city = locationInput.value;
+    const URL = API_LINK + city + API_KEY + API_UNIT_METRIC;
+
+    fetch(URL)
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            const temp = data.main.temp;
+            const humidity = data.main.humidity;
+            const visibility = data.visibility;
+            const airPressure = data.main.pressure;
+            const wind = data.wind.speed;
+
+            tempData.textContent = Math.floor(temp) + '°C';
+            humData.textContent = humidity + "%";
+            visibilityData.textContent = visibility + ' m';
+            airPressureData.textContent = airPressure + ' hPa';
+            windData.textContent = wind + ' m/s'
+
+
+        })
+}
 
 const searchLocation = () => {
     if (locationInput.value !== '') {
@@ -48,7 +84,6 @@ const enterKeyCheck = e => {
         searchLocation()
 }
 
-
 const tempConverter = () => {
     if (tempTool.checked == true) {
         tempData.textContent = tempData.textContent * 1.8 + 32;
@@ -58,24 +93,17 @@ const tempConverter = () => {
     }
 }
 
-
 const underlineTommorow = () => {
 
     todayBtn.classList.remove('underline');
     tommorowBtn.classList.add('underline');
 }
 
-
-
 const underlineToday = () => {
 
     todayBtn.classList.add('underline');
     tommorowBtn.classList.remove('underline');
 }
-
-
-
-
 
 const showCurrentTime = () => {
     const currentDateTime = new Date();
@@ -86,7 +114,4 @@ const showCurrentTime = () => {
     currentHourDiv.innerHTML = currentTime;
 }
 
-
-
-
-document.addEventListener('DOMContentLoaded', main);
+document.addEventListener('DOMContentLoaded', main)
