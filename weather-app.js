@@ -22,7 +22,6 @@ const main = () => {
     prepareDOMEvents();
     showCurrentTime();
     setInterval(showCurrentTime, 1000);
-    getWeather();
     showCurrentDate()
 }
 
@@ -56,33 +55,33 @@ const getWeather = () => {
         .then(res => res.json())
         .then(data => {
             console.log(data);
-            const temp = data.main.temp;
+            const city = data.name;
+            const temperature = data.main.temp;
             const humidity = data.main.humidity;
             const visibility = data.visibility;
             const airPressure = data.main.pressure;
             const wind = data.wind.speed;
 
-            tempData.textContent = Math.floor(temp) + '°C';
+            locationData.textContent = city;
+            tempData.textContent = Math.floor(temperature) + '°C';
             humData.textContent = humidity + "%";
             visibilityData.textContent = visibility + ' m';
             airPressureData.textContent = airPressure + ' hPa';
             windData.textContent = wind + ' m/s'
         })
+        .catch(() => { locationData.textContent = "Sorry, we can't find your city." })
 }
 
 const searchLocation = () => {
-    if (locationInput.value !== '') {
-        locationData.textContent = locationInput.value
-
-    } else {
+    if (locationInput.value == '') {
         locationInput.setAttribute('placeholder', 'Enter a city name!')
-
     }
 }
 
 const enterKeyCheck = e => {
     if (e.key === 'Enter')
-        searchLocation()
+        getWeather()
+    searchLocation()
 }
 
 const tempConverter = () => {
