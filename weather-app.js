@@ -22,7 +22,8 @@ const main = () => {
     prepareDOMEvents();
     showCurrentTime();
     setInterval(showCurrentTime, 1000);
-    showCurrentDate()
+    showCurrentDate();
+
 }
 
 const prepareDOMElements = () => {
@@ -42,62 +43,101 @@ const prepareDOMElements = () => {
 
 const prepareDOMEvents = () => {
     locationInput.addEventListener('keyup', enterKeyCheck);
-    tempTool.addEventListener('change', tempConverter);
+    tempTool.addEventListener('change', getWeather);
     todayBtn.addEventListener('click', underlineToday);
     tommorowBtn.addEventListener('click', underlineTommorow);
 }
 
-const getWeather = () => {
-    const city = locationInput.value;
-    const URL = API_LINK + city + API_KEY + API_UNIT_METRIC;
-
-    fetch(URL)
-        .then(res => res.json())
-        .then(data => {
-            console.log(data);
-            const city = data.name;
-            const temperature = data.main.temp;
-            const humidity = data.main.humidity;
-            const visibility = data.visibility;
-            const airPressure = data.main.pressure;
-            const wind = data.wind.speed;
-
-            locationData.textContent = city;
-            tempData.textContent = Math.floor(temperature) + '°C';
-            humData.textContent = humidity + "%";
-            visibilityData.textContent = visibility + ' m';
-            airPressureData.textContent = airPressure + ' hPa';
-            windData.textContent = wind + ' m/s'
-        })
-        .catch(() => {
-            locationData.textContent = "Sorry, we can't find your city.";
-            tempData.textContent = '-- °C';
-            humData.textContent = "-- %";
-            visibilityData.textContent = '-- m';
-            airPressureData.textContent = '-- hPa';
-            windData.textContent = '-- m/s'
-        })
+const imperialUnits = () => {
+    tempData.textContent = '-- °F';
+    humData.textContent = "-- %";
+    visibilityData.textContent = '-- m';
+    airPressureData.textContent = '-- hPa';
+    windData.textContent = '-- mph';
 }
 
-const searchLocation = () => {
-    if (locationInput.value == '') {
-        locationInput.setAttribute('placeholder', 'Enter a city name!')
+const metricUnits = () => {
+    tempData.textContent = '-- °C';
+    humData.textContent = "-- %";
+    visibilityData.textContent = '-- m';
+    airPressureData.textContent = '-- hPa';
+    windData.textContent = '-- m/s';
+}
+
+const getWeather = () => {
+    if (tempTool.checked == true) {
+        imperialUnits();
+
+        const city = locationInput.value;
+        const URL = API_LINK + city + API_KEY + API_UNIT_IMPERIAL;
+
+        fetch(URL)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                const city = data.name;
+                const temperature = data.main.temp;
+                const humidity = data.main.humidity;
+                const visibility = data.visibility;
+                const airPressure = data.main.pressure;
+                const wind = data.wind.speed;
+
+                locationData.textContent = city;
+                tempData.textContent = Math.floor(temperature) + '°F';
+                humData.textContent = humidity + "%";
+                visibilityData.textContent = visibility + ' m';
+                airPressureData.textContent = airPressure + ' hPa';
+                windData.textContent = wind + ' mph'
+            })
+            .catch(() => {
+                if (locationInput.value == '') {
+                    locationInput.setAttribute('placeholder', 'Enter a city name!');
+                    locationData.textContent = " "
+                } else {
+                    locationData.textContent = "Sorry, we can't find your city.";
+                    imperialUnits();
+                }
+            })
+
+    } else {
+        metricUnits();
+
+        const city = locationInput.value;
+        const URL = API_LINK + city + API_KEY + API_UNIT_METRIC;
+
+        fetch(URL)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                const city = data.name;
+                const temperature = data.main.temp;
+                const humidity = data.main.humidity;
+                const visibility = data.visibility;
+                const airPressure = data.main.pressure;
+                const wind = data.wind.speed;
+
+                locationData.textContent = city;
+                tempData.textContent = Math.floor(temperature) + '°C';
+                humData.textContent = humidity + "%";
+                visibilityData.textContent = visibility + ' m';
+                airPressureData.textContent = airPressure + ' hPa';
+                windData.textContent = wind + ' m/s'
+            })
+            .catch(() => {
+                if (locationInput.value == '') {
+                    locationInput.setAttribute('placeholder', 'Enter a city name!');
+                    locationData.textContent = " "
+                } else {
+                    locationData.textContent = "Sorry, we can't find your city.";
+                    metricUnits();
+                }
+            })
     }
 }
 
 const enterKeyCheck = e => {
     if (e.key === 'Enter')
-        getWeather()
-    searchLocation()
-}
-
-const tempConverter = () => {
-    if (tempTool.checked == true) {
-        tempData.textContent = tempData.textContent * 1.8 + 32;
-
-    } else {
-        tempData.textContent = (tempData.textContent - 32) / 1.8
-    }
+        getWeather();
 }
 
 const underlineTommorow = () => {
