@@ -163,12 +163,13 @@ const showCurrentTime = () => {
 
 const showCurrentDate = () => {
     const currentDate = new Date();
-    const currentDay = currentDate.getDay();
-    const currentMonth = currentDate.getMonth();
-    const currentYear = currentDate.getFullYear();
-    const currentCalendarDate = `${currentDay < 10 ? 0 : ""}${currentDay}.${currentMonth < 10 ? 0 : ""}${currentMonth}.${currentYear}`;
+    const dd = String(currentDate.getDate()).padStart(2, '0');
+    const mm = String(currentDate.getMonth() + 1).padStart(2, '0');
+    const yyyy = currentDate.getFullYear();
 
-    currentDateDiv.innerHTML = currentCalendarDate;
+    const today = dd + "." + mm + "." + yyyy;
+
+    currentDateDiv.innerHTML = today;
 }
 
 document.addEventListener('DOMContentLoaded', main)
