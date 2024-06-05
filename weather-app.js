@@ -69,7 +69,14 @@ const getWeather = () => {
             airPressureData.textContent = airPressure + ' hPa';
             windData.textContent = wind + ' m/s'
         })
-        .catch(() => { locationData.textContent = "Sorry, we can't find your city." })
+        .catch(() => {
+            locationData.textContent = "Sorry, we can't find your city.";
+            tempData.textContent = '-- °C';
+            humData.textContent = "-- %";
+            visibilityData.textContent = '-- m';
+            airPressureData.textContent = '-- hPa';
+            windData.textContent = '-- m/s'
+        })
 }
 
 const searchLocation = () => {
