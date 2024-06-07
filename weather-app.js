@@ -10,6 +10,7 @@ let humData;
 let visibilityData;
 let airPressureData;
 let windData;
+let locationPinIcon;
 
 
 const API_LINK = "https://api.openweathermap.org/data/2.5/weather?q=";
@@ -39,6 +40,7 @@ const prepareDOMElements = () => {
     visibilityData = document.querySelector('.data-visibility');
     airPressureData = document.querySelector('.air-pressure-data');
     windData = document.querySelector('.data-wind');
+    locationPinIcon = document.querySelector('.location-pin')
 }
 
 const prepareDOMEvents = () => {
@@ -87,15 +89,22 @@ const getWeather = () => {
                 humData.textContent = humidity + "%";
                 visibilityData.textContent = visibility + ' m';
                 airPressureData.textContent = airPressure + ' hPa';
-                windData.textContent = wind + ' mph'
+                windData.textContent = wind + ' mph';
+
+                locationPinIcon.classList.remove('hide-pin');
+                locationData.classList.remove('location-error-info');
+
             })
             .catch(() => {
                 if (locationInput.value == '') {
                     locationInput.setAttribute('placeholder', 'Enter a city name!');
-                    locationData.textContent = " "
+                    locationData.textContent = " ";
+                    ocationPinIcon.classList.add('hide-pin')
                 } else {
                     locationData.textContent = "Sorry, we can't find your city.";
                     imperialUnits();
+                    locationPinIcon.classList.add('hide-pin');
+                    locationData.classList.add('location-error-info');
                 }
             })
 
@@ -121,15 +130,22 @@ const getWeather = () => {
                 humData.textContent = humidity + "%";
                 visibilityData.textContent = visibility + ' m';
                 airPressureData.textContent = airPressure + ' hPa';
-                windData.textContent = wind + ' m/s'
+                windData.textContent = wind + ' m/s';
+
+                locationPinIcon.classList.remove('hide-pin');
+                locationData.classList.remove('location-error-info');
+
             })
             .catch(() => {
                 if (locationInput.value == '') {
                     locationInput.setAttribute('placeholder', 'Enter a city name!');
-                    locationData.textContent = " "
+                    locationData.textContent = " ";
+                    locationPinIcon.classList.add('hide-pin')
                 } else {
                     locationData.textContent = "Sorry, we can't find your city.";
                     metricUnits();
+                    locationPinIcon.classList.add('hide-pin');
+                    locationData.classList.add('location-error-info');
                 }
             })
     }

@@ -196,12 +196,27 @@ input[type=text]:focus {
     min-width: 350px;
 }
 
-/* .location-name {
-    background-color: greenyellow;
-} */
+.location-name {
+    display: flex;
+    flex-direction: row;
+    margin-top: 2%;
+}
+
+.location-pin {
+    height: 85%;
+}
+
+.hide-pin {
+    display: none;
+}
 
 .data-location {
     margin-left: 5%;
+    font-size: 24px;
+}
+
+.location-error-info {
+    font-size: 20px;
 }
 
 .temp-info {
