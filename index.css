@@ -156,6 +156,10 @@ input:checked+.sliderBall {
     gap: 10%;
 }
 
+.location-div-hide {
+    display: none;
+}
+
 .location-div input {
     height: 50px;
     width: 200px;
@@ -220,7 +224,6 @@ input[type=text]:focus {
 }
 
 .temp-info {
-    /* background-color: blueviolet; */
     text-align: center;
 }
 
@@ -236,8 +239,21 @@ input[type=text]:focus {
     color: white;
 }
 
+.weather-info-hide {
+    display: none;
+}
+
+.coming-soon-text-hide {
+    display: none;
+}
+
+.coming-soon {
+    color: white;
+    margin-top: 20%;
+    text-align: center;
+}
+
 .weather-details {
-    /* background-color: goldenrod; */
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -265,8 +281,6 @@ input[type=text]:focus {
     display: flex;
     flex-direction: column;
 }
-
-/* added classes */
 
 
 
@@ -333,5 +347,10 @@ input[type=text]:focus {
     .weather-div {
         display: flex;
         justify-content: center;
+    }
+
+    .coming-soon {
+        margin-top: 5%;
+        font-size: 30px;
     }
 }

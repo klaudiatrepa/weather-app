@@ -11,6 +11,9 @@ let visibilityData;
 let airPressureData;
 let windData;
 let locationPinIcon;
+let weatherInfo;
+let locationDiv;
+let comingSoonDiv;
 
 
 const API_LINK = "https://api.openweathermap.org/data/2.5/weather?q=";
@@ -40,14 +43,17 @@ const prepareDOMElements = () => {
     visibilityData = document.querySelector('.data-visibility');
     airPressureData = document.querySelector('.air-pressure-data');
     windData = document.querySelector('.data-wind');
-    locationPinIcon = document.querySelector('.location-pin')
+    locationPinIcon = document.querySelector('.location-pin');
+    weatherInfo = document.querySelector('.weather-info');
+    locationDiv = document.querySelector('.location-div');
+    comingSoonDiv = document.querySelector('.coming-soon');
 }
 
 const prepareDOMEvents = () => {
     locationInput.addEventListener('keyup', enterKeyCheck);
     tempTool.addEventListener('change', getWeather);
-    todayBtn.addEventListener('click', underlineToday);
-    tommorowBtn.addEventListener('click', underlineTommorow);
+    todayBtn.addEventListener('click', todayTab);
+    tommorowBtn.addEventListener('click', showComingSoonInfo);
 }
 
 const imperialUnits = () => {
@@ -99,7 +105,7 @@ const getWeather = () => {
                 if (locationInput.value == '') {
                     locationInput.setAttribute('placeholder', 'Enter a city name!');
                     locationData.textContent = " ";
-                    ocationPinIcon.classList.add('hide-pin')
+                    locationPinIcon.classList.add('hide-pin')
                 } else {
                     locationData.textContent = "Sorry, we can't find your city.";
                     imperialUnits();
@@ -186,6 +192,20 @@ const showCurrentDate = () => {
     const today = dd + "." + mm + "." + yyyy;
 
     currentDateDiv.innerHTML = today;
+}
+
+const showComingSoonInfo = () => {
+    weatherInfo.classList.add('weather-info-hide');
+    locationDiv.classList.add('location-div-hide');
+    underlineTommorow();
+    comingSoonDiv.classList.remove('coming-soon-text-hide');
+}
+
+const todayTab = () => {
+    weatherInfo.classList.remove('weather-info-hide');
+    locationDiv.classList.remove('location-div-hide');
+    underlineToday()
+    comingSoonDiv.classList.add('coming-soon-text-hide');
 }
 
 document.addEventListener('DOMContentLoaded', main)
