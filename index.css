@@ -230,6 +230,14 @@ input[type=text]:focus {
     justify-content: center;
 }
 
+.hide {
+    display: none;
+}
+.weather-icon {
+    height: 90%;
+    padding-left: 2%;
+}
+
 .data-temp {
     font-size: 35px;
 }

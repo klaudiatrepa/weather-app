@@ -14,6 +14,7 @@ let locationPinIcon;
 let weatherInfo;
 let locationDiv;
 let comingSoonDiv;
+let weatherIcon;
 
 
 const API_LINK = "https://api.openweathermap.org/data/2.5/weather?q=";
@@ -47,6 +48,7 @@ const prepareDOMElements = () => {
     weatherInfo = document.querySelector('.weather-info');
     locationDiv = document.querySelector('.location-div');
     comingSoonDiv = document.querySelector('.coming-soon');
+    weatherIcon = document.querySelector('.weather-icon');
 }
 
 const prepareDOMEvents = () => {
@@ -71,50 +73,8 @@ const metricUnits = () => {
     airPressureData.textContent = '-- hPa';
     windData.textContent = '-- m/s';
 }
-
 const getWeather = () => {
-    if (tempTool.checked == true) {
-        imperialUnits();
-
-        const city = locationInput.value;
-        const URL = API_LINK + city + API_KEY + API_UNIT_IMPERIAL;
-
-        fetch(URL)
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
-                const city = data.name;
-                const temperature = data.main.temp;
-                const humidity = data.main.humidity;
-                const visibility = data.visibility;
-                const airPressure = data.main.pressure;
-                const wind = data.wind.speed;
-
-                locationData.textContent = city;
-                tempData.textContent = Math.floor(temperature) + '°F';
-                humData.textContent = humidity + "%";
-                visibilityData.textContent = visibility + ' m';
-                airPressureData.textContent = airPressure + ' hPa';
-                windData.textContent = wind + ' mph';
-
-                locationPinIcon.classList.remove('hide-pin');
-                locationData.classList.remove('location-error-info');
-
-            })
-            .catch(() => {
-                if (locationInput.value == '') {
-                    locationInput.setAttribute('placeholder', 'Enter a city name!');
-                    locationData.textContent = " ";
-                    locationPinIcon.classList.add('hide-pin')
-                } else {
-                    locationData.textContent = "Sorry, we can't find your city.";
-                    imperialUnits();
-                    locationPinIcon.classList.add('hide-pin');
-                    locationData.classList.add('location-error-info');
-                }
-            })
-
-    } else {
+    if (tempTool.checked == false) {
         metricUnits();
 
         const city = locationInput.value;
@@ -140,18 +100,104 @@ const getWeather = () => {
 
                 locationPinIcon.classList.remove('hide-pin');
                 locationData.classList.remove('location-error-info');
+                weatherIcon.classList.remove('hide');
 
+                const status = data.weather[0].id
+                console.log(status);
+
+                if (status >= 200 && status < 300) {
+                    weatherIcon.setAttribute('src', '/Users/klaudiatrepa/Praca/weather-app/svg/thunderstorm.svg')
+                } else if (status >= 300 && status < 400) {
+                    weatherIcon.setAttribute('src', '/Users/klaudiatrepa/Praca/weather-app/svg/rainy.svg')
+                } else if (status >= 500 && status < 600) {
+                    weatherIcon.setAttribute('src', '/Users/klaudiatrepa/Praca/weather-app/svg/rainy.svg')
+                } else if (status >= 600 && status < 700) {
+                    weatherIcon.setAttribute('src', '/Users/klaudiatrepa/Praca/weather-app/svg/snow.svg')
+                } else if (status >= 700 && status < 800) {
+                    weatherIcon.setAttribute('src', '/Users/klaudiatrepa/Praca/weather-app/svg/foggy.svg')
+                } else if (status == 800) {
+                    weatherIcon.setAttribute('src', '/Users/klaudiatrepa/Praca/weather-app/svg/sunny.svg')
+                } else if (status >= 800 && status < 900) {
+                    weatherIcon.setAttribute('src', '/Users/klaudiatrepa/Praca/weather-app/svg/cloud.svg')
+                }
             })
             .catch(() => {
                 if (locationInput.value == '') {
                     locationInput.setAttribute('placeholder', 'Enter a city name!');
                     locationData.textContent = " ";
-                    locationPinIcon.classList.add('hide-pin')
+                    locationPinIcon.classList.add('hide-pin');
+                    weatherIcon.classList.add('hide')
                 } else {
                     locationData.textContent = "Sorry, we can't find your city.";
                     metricUnits();
                     locationPinIcon.classList.add('hide-pin');
                     locationData.classList.add('location-error-info');
+                    weatherIcon.classList.add('hide');
+                }
+            })
+    }
+
+    else {
+        imperialUnits();
+
+        const city = locationInput.value;
+        const URL = API_LINK + city + API_KEY + API_UNIT_IMPERIAL;
+
+        fetch(URL)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                const city = data.name;
+                const temperature = data.main.temp;
+                const humidity = data.main.humidity;
+                const visibility = data.visibility;
+                const airPressure = data.main.pressure;
+                const wind = data.wind.speed;
+
+                locationData.textContent = city;
+                tempData.textContent = Math.floor(temperature) + '°F';
+                humData.textContent = humidity + "%";
+                visibilityData.textContent = visibility + ' m';
+                airPressureData.textContent = airPressure + ' hPa';
+                windData.textContent = wind + ' mph';
+
+                locationPinIcon.classList.remove('hide-pin');
+                locationData.classList.remove('location-error-info');
+                weatherIcon.classList.remove('hide');
+
+                const status = data.weather[0].id
+                console.log(status);
+
+                if (status >= 200 && status < 300) {
+                    weatherIcon.setAttribute('src', '/Users/klaudiatrepa/Praca/weather-app/svg/thunderstorm.svg')
+                } else if (status >= 300 && status < 400) {
+                    weatherIcon.setAttribute('src', '/Users/klaudiatrepa/Praca/weather-app/svg/rainy.svg')
+                } else if (status >= 500 && status < 600) {
+                    weatherIcon.setAttribute('src', '/Users/klaudiatrepa/Praca/weather-app/svg/rainy.svg')
+                } else if (status >= 600 && status < 700) {
+                    weatherIcon.setAttribute('src', '/Users/klaudiatrepa/Praca/weather-app/svg/snow.svg')
+                } else if (status >= 700 && status < 800) {
+                    weatherIcon.setAttribute('src', '/Users/klaudiatrepa/Praca/weather-app/svg/foggy.svg')
+                } else if (status == 800) {
+                    weatherIcon.setAttribute('src', '/Users/klaudiatrepa/Praca/weather-app/svg/sunny.svg')
+                } else if (status >= 800 && status < 900) {
+                    weatherIcon.setAttribute('src', '/Users/klaudiatrepa/Praca/weather-app/svg/cloud.svg')
+                }
+
+            })
+            .catch(() => {
+
+                if (locationInput.value == '') {
+                    locationInput.setAttribute('placeholder', 'Enter a city name!');
+                    locationData.textContent = " ";
+                    locationPinIcon.classList.add('hide-pin');
+                    weatherIcon.classList.add('hide');
+                } else {
+                    locationData.textContent = "Sorry, we can't find your city.";
+                    imperialUnits();
+                    locationPinIcon.classList.add('hide-pin');
+                    locationData.classList.add('location-error-info');
+                    weatherIcon.classList.add('hide');
                 }
             })
     }
