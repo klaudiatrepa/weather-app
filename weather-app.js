@@ -16,14 +16,15 @@ let locationDiv;
 let comingSoonDiv;
 let weatherIcon;
 
+let unit = 'metric';
+let day = 'today';
+let city;
 
 const API_LINK = "https://api.openweathermap.org/data/2.5/weather?q=";
+const API_LINK_TOMORROW = 'https://api.openweathermap.org/data/2.5/forecast?q=';
 const API_KEY = "&appid=850bf7154a3a4b64ad55146334b9b956";
 const API_UNIT_METRIC = "&units=metric";
 const API_UNIT_IMPERIAL = "&units=imperial";
-
-const API_LINK_TOMORROW = 'https://api.openweathermap.org/data/2.5/forecast?q=';
-
 
 const main = () => {
     prepareDOMElements();
@@ -31,7 +32,6 @@ const main = () => {
     showCurrentTime();
     setInterval(showCurrentTime, 1000);
     showCurrentDate();
-
 }
 
 const prepareDOMElements = () => {
@@ -55,10 +55,24 @@ const prepareDOMElements = () => {
 }
 
 const prepareDOMEvents = () => {
-    locationInput.addEventListener('keyup', enterKeyCheck);
-    tempTool.addEventListener('change', getWeather);
-    todayBtn.addEventListener('click', todayTab);
-    tomorrowBtn.addEventListener('click', getWeatherTomorrow);
+    locationInput.addEventListener('keyup', (e) => {
+        city = e.target.value;
+        if (e.key === 'Enter') {
+            getWeather();
+        }
+    });
+    tempTool.addEventListener('change', (e) => {
+        unit = e.target.checked ? 'imperial' : 'metric';
+        getWeather();
+    });
+    todayBtn.addEventListener('click', () => {
+        day = 'today';
+        getWeather();
+    });
+    tomorrowBtn.addEventListener('click', () => {
+        day = 'tomorrow';
+        getWeather();
+    });
 }
 
 const imperialUnits = () => {
@@ -76,17 +90,29 @@ const metricUnits = () => {
     airPressureData.textContent = '-- hPa';
     windData.textContent = '-- m/s';
 }
+
 const getWeather = () => {
-    if (tempTool.checked == false) {
+    if (day === 'today') {
+        underlineToday();
+        showCurrentDate();
+        getWeatherToday();
+    } else {
+        underlineTomorrow();
+        showTomorrowDate();
+        getWeatherTomorrow();
+    }
+}
+
+const getWeatherToday = () => {
+    if (unit === 'metric') {
         metricUnits();
 
-        const city = locationInput.value;
         const URL = API_LINK + city + API_KEY + API_UNIT_METRIC;
 
         fetch(URL)
             .then(res => res.json())
             .then(data => {
-                console.log(data);
+
                 const city = data.name;
                 const temperature = data.main.temp;
                 const humidity = data.main.humidity;
@@ -138,17 +164,15 @@ const getWeather = () => {
                 }
             })
     }
-
     else {
         imperialUnits();
 
-        const city = locationInput.value;
         const URL = API_LINK + city + API_KEY + API_UNIT_IMPERIAL;
 
         fetch(URL)
             .then(res => res.json())
             .then(data => {
-                console.log(data);
+
                 const city = data.name;
                 const temperature = data.main.temp;
                 const humidity = data.main.humidity;
@@ -168,7 +192,6 @@ const getWeather = () => {
                 weatherIcon.classList.remove('hide');
 
                 const status = data.weather[0].id
-                console.log(status);
 
                 if (status >= 200 && status < 300) {
                     weatherIcon.setAttribute('src', '/Users/klaudiatrepa/Praca/weather-app/svg/thunderstorm.svg')
@@ -188,7 +211,6 @@ const getWeather = () => {
 
             })
             .catch(() => {
-
                 if (locationInput.value == '') {
                     locationInput.setAttribute('placeholder', 'Enter a city name!');
                     locationData.textContent = " ";
@@ -206,19 +228,15 @@ const getWeather = () => {
 }
 
 const getWeatherTomorrow = () => {
-    underlineTomorrow();
-
-    if (tempTool.checked == false) {
+    if (unit === 'metric') {
         metricUnits();
-        showTomorrowDate();
 
-        const city = locationInput.value;
         const URL_TOMORROW = API_LINK_TOMORROW + city + API_KEY + API_UNIT_METRIC;
 
         fetch(URL_TOMORROW)
             .then(res => res.json())
             .then(data => {
-                console.log(data);
+
                 const city = data.city.name;
                 const temperature = data.list[9].main.temp;
                 const humidity = data.list[9].main.humidity;
@@ -271,18 +289,15 @@ const getWeatherTomorrow = () => {
                 }
             })
     }
-
     else {
         imperialUnits();
-        showTomorrowDate();
 
-        const city = locationInput.value;
         const URL_TOMORROW = API_LINK_TOMORROW + city + API_KEY + API_UNIT_IMPERIAL;
 
         fetch(URL_TOMORROW)
             .then(res => res.json())
             .then(data => {
-                console.log(data);
+
                 const city = data.city.name;
                 const temperature = data.list[9].main.temp;
                 const humidity = data.list[9].main.humidity;
@@ -301,7 +316,7 @@ const getWeatherTomorrow = () => {
                 locationData.classList.remove('location-error-info');
                 weatherIcon.classList.remove('hide');
 
-                const status = data.weather[0].id
+                const status = data.list[10].weather[0].id;
 
                 if (status >= 200 && status < 300) {
                     weatherIcon.setAttribute('src', '/Users/klaudiatrepa/Praca/weather-app/svg/thunderstorm.svg')
@@ -318,10 +333,8 @@ const getWeatherTomorrow = () => {
                 } else if (status >= 800 && status < 900) {
                     weatherIcon.setAttribute('src', '/Users/klaudiatrepa/Praca/weather-app/svg/cloud.svg')
                 }
-
             })
             .catch(() => {
-
                 if (locationInput.value == '') {
                     locationInput.setAttribute('placeholder', 'Enter a city name!');
                     locationData.textContent = " ";
@@ -338,24 +351,12 @@ const getWeatherTomorrow = () => {
     }
 }
 
-const enterKeyCheck = e => {
-    if (e.key === 'Enter')
-        getWeather();
-}
-
-const enterKeyCheckTomorrow = e => {
-    if (e.key === 'Enter')
-        getWeatherTomorrow();
-}
-
 const underlineTomorrow = () => {
-
     todayBtn.classList.remove('underline');
     tomorrowBtn.classList.add('underline');
 }
 
 const underlineToday = () => {
-
     todayBtn.classList.add('underline');
     tomorrowBtn.classList.remove('underline');
 }
@@ -374,7 +375,6 @@ const showCurrentDate = () => {
     const dd = String(currentDate.getDate()).padStart(2, '0');
     const mm = String(currentDate.getMonth() + 1).padStart(2, '0');
     const yyyy = currentDate.getFullYear();
-
     const today = dd + "." + mm + "." + yyyy;
 
     currentDateDiv.innerHTML = today;
@@ -385,24 +385,9 @@ const showTomorrowDate = () => {
     const dd = String(currentDate.getDate()).padStart(2, '0');
     const mm = String(currentDate.getMonth() + 1).padStart(2, '0');
     const yyyy = currentDate.getFullYear();
-
     const tomorrow = dd + "." + mm + "." + yyyy;
 
     currentDateDiv.innerHTML = tomorrow;
-}
-
-const showComingSoonInfo = () => {
-    // weatherInfo.classList.add('weather-info-hide');
-    // locationDiv.classList.add('location-div-hide');
-    underlineTomorrow();
-    // comingSoonDiv.classList.remove('coming-soon-text-hide');
-}
-
-const todayTab = () => {
-    // weatherInfo.classList.remove('weather-info-hide');
-    // locationDiv.classList.remove('location-div-hide');
-    underlineToday()
-    // comingSoonDiv.classList.add('coming-soon-text-hide');
 }
 
 document.addEventListener('DOMContentLoaded', main)
