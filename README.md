@@ -1,5 +1,5 @@
 
-# Weather App.
+# Weather App
 
 ## A few words about the project.
 
